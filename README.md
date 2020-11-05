@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# COVID-19 App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple webapp project I made to help, show covid-19 data to my friends and family. 
+You can currently access the website here .[add website] 
 
-## Available Scripts
+## Backend
+Inside the backend we have 2 main steps, 
+1) Retrieving the data,
+2) Conducting some pre-processing on the data
 
-In the project directory, you can run:
+For step one, I am using the [covid-19 api](https://api.covid19api.com/), it's a pretty basic API, 
+but it gets the job done, and I can make as many general enquires as I please.
 
-### `npm start`
+Then I conduct some analysis on the data. To do this I began by using jupyter notebook
+to see how I could pull the data. I began making some basic functions such as the following 
+```python
+import requests
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# gets the json file from a specific URL
+def make_get_request(url):
+    return requests.get(url).json()
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# gets the basic information, for a specified country
+def get_cases_for_country(country):
+    return [{"Province": x["Province"], "Lon": x["Lon"], "Lat": x["Lat"], "Confirmed": x["Confirmed"], "Deaths": x["Deaths"], "Recovered": x["Recovered"], "Active": x["Active"], "Date": x["Date"][:10]} for x in make_get_request("https://api.covid19api.com/dayone/country/"+country)]
+ 
+# gets a list of the provinces from a specified country
+def get_provinces_from_country(country):
+    cases = get_cases_for_country(country)
+    no_duplicates = []
+    for x in cases:
+        if not (x["Province"] in no_duplicates):
+            no_duplicates.append(x["Province"])
+    return no_duplicates
 
-### `npm test`
+# gets information by province
+def get_information_by_province(province, country):
+    return [x for x in get_cases_for_country(country) if x["Province"]==province]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# gets information by date, for a specified country
+def get_information_by_date(date, country):
+    return [x for x in get_cases_for_country(country) if x["Date"]==date]
 
-### `npm run build`
+# gets deaths with dates for a country (used for graphing)
+def get_deaths_with_dates(country, province=''):
+    return [{"Deaths": x["Deaths"], "Date": x["Date"]} for x in get_information_by_province(province,country)]
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# gets confirmed cases with dates for a country (used for graphing)
+def get_confirmed_with_dates(country, province=''):
+    return [{"Confirmed": x["Confirmed"], "Date": x["Date"]} for x in get_information_by_province(province,country)]
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# gets a list of the available countries 
+def get_country_list():
+    country_list = make_get_request("https://api.covid19api.com/countries")
+    return sorted([x["Country"] for x in country_list])
+``` 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Then I used flask to serve up the information on a different port and used a proxy to allow my react 
+app to interact with the flask app. 
 
-### `npm run eject`
+## Frontend 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Social Media 
+these are my social media's, stay tuned because I will publish the source code to the predecesor of the mechanics calculator, the statistics calculator, this app managed to gain over 3000+ app installs. 
+- [Linkden - Elijah Ahmad](https://www.linkedin.com/in/elijah-ahmad-658a2b199/)
+- [FaceBook - Elijah Ahmad](https://www.facebook.com/elijah.ahmad.71)
+- [Instagram - @ElijahAhmad__](https://www.instagram.com/ElijahAhmad__)
+- [Snapchat - @Elijah.Ahmad](https://www.snapchat.com/add/elijah.ahmad)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
