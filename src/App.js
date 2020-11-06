@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import {Dropdown, FormControl, ListGroup,} from "react-bootstrap";
 
-
+const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 
 const params = {
     country: "ca"

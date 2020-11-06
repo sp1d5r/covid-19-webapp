@@ -63,7 +63,7 @@ def get_yesterday_information(country):
     return get_information_by_date(today.strftime("%Y-%m-%d"), country)
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 @app.route('/info_by_date/<country>/<date>')
 def info_by_date(country, date):
@@ -118,3 +118,10 @@ def get_country_yesterday(country):
     country = [x if x != '_' else ' ' for x in country]
     country = ''.join(country)
     return jsonify(get_yesterday_information(country))
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
