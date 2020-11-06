@@ -11,8 +11,7 @@ def make_get_request(url):
 
 def get_cases_for_country(country):
     return [{"Province": x["Province"], "Lon": x["Lon"], "Lat": x["Lat"], "Confirmed": x["Confirmed"],
-             "Deaths": x["Deaths"], "Recovered": x["Recovered"], "Active": x["Active"], "Date": x["Date"][:10]} for x in
-            make_get_request("https://api.covid19api.com/dayone/country/" + country)]
+             "Deaths": x["Deaths"], "Recovered": x["Recovered"], "Active": x["Active"], "Date": x["Date"][:10]} for x in make_get_request("https://api.covid19api.com/dayone/country/" + country)]
 
 
 def get_provinces_from_country(country):
@@ -24,24 +23,27 @@ def get_provinces_from_country(country):
     return no_duplicates
 
 
-def get_information_by_province(province, country):
+def get_information_by_province(country, province='',):
     return [x for x in get_cases_for_country(country) if x["Province"] == province]
 
 
 def get_information_by_date(date, country):
-    return [x for x in get_cases_for_country(country) if x["Date"] == date]
+    return [x for x in get_information_by_province(country) if x["Date"] == date]
 
 
 def get_deaths_with_dates(country, province=''):
-    return [{"Deaths": x["Deaths"], "Date": x["Date"]} for x in get_information_by_province(province, country)]
+    return [{"Deaths": x["Deaths"], "Date": x["Date"]} for x in get_information_by_province(country, province)]
 
 
 def get_confirmed_with_dates(country, province=''):
-    return [{"Confirmed": x["Confirmed"], "Date": x["Date"]} for x in get_information_by_province(province, country)]
+    return [{"Confirmed": x["Confirmed"], "Date": x["Date"]} for x in get_information_by_province(country, province)]
 
 
 def get_recovered_with_dates(country, province=''):
-    return [{"Recovered": x["Recovered"], "Date": x["Date"]} for x in get_information_by_province(province, country)]
+    return [{"Recovered": x["Recovered"], "Date": x["Date"]} for x in get_information_by_province(country, province)]
+
+def get_confirmed_and_deaths_from_country(country, province=''):
+    return [{"Deaths": x["Deaths"], "Confirmed": x["Confirmed"], "Date": x["Date"]} for x in get_information_by_province(country, province)]
 
 
 def get_country_list():
@@ -75,7 +77,13 @@ def info_by_date(country, date):
 def get_info_for_specific_country(country):
     country = [x if x != '_' else ' ' for x in country]
     country = ''.join(country)
-    return jsonify(get_cases_for_country(country))
+    return jsonify(get_information_by_province(country))
+
+@app.route('/get_confirmed_and_deaths_from_country/<country>')
+def get_confirmed_deaths_from_country(country):
+    country = [x if x != '_' else ' ' for x in country]
+    country = ''.join(country)
+    return jsonify(get_confirmed_and_deaths_from_country(country))
 
 @app.route('/confirmed_from_country/<country>')
 def confirmed_from_country(country):
