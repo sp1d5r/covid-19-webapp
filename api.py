@@ -63,7 +63,7 @@ def get_yesterday_information(country):
     return get_information_by_date(today.strftime("%Y-%m-%d"), country)
 
 
-app = Flask(__name__, static_folder='../build', static_url_path='/')
+app = Flask(__name__, static_folder='build', static_url_path='/')
 
 @app.route('/info_by_date/<country>/<date>')
 def info_by_date(country, date):

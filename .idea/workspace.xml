@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7464dbcd-abce-465e-a932-aa3bc3165738" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/covid-flask-api/.flaskenv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/covid-flask-api/api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +33,7 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/covid-flask-api" />
       <recent name="$PROJECT_DIR$/build" />
     </key>
   </component>
@@ -99,7 +100,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604535354038</updated>
-      <workItem from="1604535356641" duration="13290000" />
+      <workItem from="1604535356641" duration="13854000" />
     </task>
     <servers />
   </component>
@@ -127,5 +128,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1419" height="226" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1604623493011" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1604624361809">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1604624361809" />
   </component>
 </project>
