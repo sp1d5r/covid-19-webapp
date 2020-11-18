@@ -1,4 +1,6 @@
 # COVID-19 App
+![image of my website](https://raw.githubusercontent.com/sp1d5r/covid-19-webapp/master/preview.gif)
+
 
 This is a simple webapp project I made to help, show covid-19 data to my friends and family. 
 You can currently access the website here .[add website] 
